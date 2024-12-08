@@ -14,13 +14,14 @@ public class Asteroid : MonoBehaviour
         float spawnSpeed = Random.Range(4f - size, 5f - size);
         rb.AddForce(direction * spawnSpeed, ForceMode2D.Impulse);
         gameManager.asteroids++;
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet"))
         {
-            gameManager.asteroids--;
+            gameManager.asteroidExplode();
             Destroy(collision.gameObject);
             if (size > 1)
             {

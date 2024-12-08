@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Asteroid asteroidPrefab;
     public int asteroids = 0;
     private int level = 0;
-
+    public AudioSource explosion;
     void Update()
     {
         if (asteroids == 0)
@@ -42,6 +42,11 @@ public class GameManager : MonoBehaviour
         Vector2 worldSpawnPosition = Camera.main.ViewportToWorldPoint(viewportSpawnPosition);
         Asteroid asteroid = Instantiate(asteroidPrefab, worldSpawnPosition, Quaternion.identity);
         asteroid.gameManager = this;
+    }
+    public void asteroidExplode()
+    {
+        asteroids--;
+        explosion.Play();
     }
 
     public void GameOver()

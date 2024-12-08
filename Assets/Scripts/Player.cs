@@ -14,7 +14,11 @@ public class Player : MonoBehaviour
     private Rigidbody2D shipRB;
     private bool isAlive = true;
     private bool isAccelerating = false;
-
+    public Wrap wrap;
+    public AudioSource Teleport;
+    public AudioSource fire;
+    public AudioSource engine;
+    public AudioSource explosion;
     private void Start()
     {
         shipRB = GetComponent<Rigidbody2D>();
@@ -24,10 +28,29 @@ public class Player : MonoBehaviour
     {
         if (isAlive)
         {
+            if (wrap.telep == true)
+            {
+                Teleport.Play();
+                wrap.telep = false;
+            }
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                if(!engine.isPlaying)
+                engine.Play();
+            }
+            else
+            {
+                if (engine.isPlaying)
+                {
+                    engine.Pause(); 
+                }
+            }
             HandleShipAccel();
             HandleShipRotate();
             HandleShoot();
         }
+
+              
     }
     private void FixedUpdate()
     {
@@ -40,14 +63,15 @@ public class Player : MonoBehaviour
     private void HandleShipAccel()
     {
         isAccelerating = Input.GetKey(KeyCode.UpArrow);
+
     }
 
     private void HandleShipRotate()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             transform.Rotate(shipRotate * Time.deltaTime * transform.forward);
-        } else if (Input.GetKey(KeyCode.RightArrow))
+        } else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             transform.Rotate(-shipRotate * Time.deltaTime * transform.forward);
         }
@@ -56,7 +80,7 @@ public class Player : MonoBehaviour
 
     private void HandleShoot()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) )
         {
             Rigidbody2D bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
             Vector2 shipVel = shipRB.velocity;
@@ -68,6 +92,7 @@ public class Player : MonoBehaviour
             }
             bullet.velocity = shipDir * ForwardSpeed;
             bullet.AddForce(bulletSpeed * transform.up, ForceMode2D.Impulse);
+            fire.Play();
         }
     }
 
@@ -76,9 +101,16 @@ public class Player : MonoBehaviour
         if (collision.CompareTag("Asteroid"))
         {
             isAlive = false;
+            if (engine.isPlaying)
+            {
+                engine.Pause();
+            }
+            explosion.Play();
             GameManager gameManager = FindAnyObjectByType<GameManager>();
             gameManager.GameOver();
             Destroy(gameObject);
         }
     }
+
+
 }
