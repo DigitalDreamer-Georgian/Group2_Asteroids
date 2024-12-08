@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         shipRB = GetComponent<Rigidbody2D>();
+        shipRB.drag = 1f;
     }
     private void Update()
     {
