@@ -28,6 +28,10 @@ public class Player : MonoBehaviour
     {
         if (isAlive)
         {
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                teleport();
+            }
             if (wrap.telep == true)
             {
                 Teleport.Play();
@@ -110,6 +114,18 @@ public class Player : MonoBehaviour
             gameManager.GameOver();
             Destroy(gameObject);
         }
+    }
+
+    private void teleport()
+    {
+        // Generate random values for viewport coordinates (0 to 1)
+        float randomX = Random.Range(0f, 1f);
+        float randomY = Random.Range(0f, 1f);
+        // Convert viewport coordinates to world coordinates
+        Vector3 randomPosition = Camera.main.ViewportToWorldPoint(new Vector3(randomX, randomY, Camera.main.nearClipPlane));
+        // Set the object's position to the new random position
+        transform.position = new Vector3(randomPosition.x, randomPosition.y, transform.position.z);
+        wrap.telep = true;
     }
 
 

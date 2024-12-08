@@ -30,5 +30,7 @@ public class Wrap : MonoBehaviour
         }
 
         transform.position = Camera.main.ViewportToWorldPoint(viewportPosition + moveAdjustment);
+
     }
+
 }
