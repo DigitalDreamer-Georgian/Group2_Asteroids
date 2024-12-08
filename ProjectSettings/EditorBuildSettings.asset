@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/PauseScene.unity
+    guid: 8837b1e46df1010419f81146bff5feda
+  - enabled: 1
+    path: Assets/Scenes/TitleScene.unity
+    guid: 32116b41efb56594a92172e94a7321ee
+  - enabled: 1
+    path: Assets/Scenes/ExitScene.unity
+    guid: 63db572e6c911644f91f6b743d8317fa
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
